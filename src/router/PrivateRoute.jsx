@@ -1,10 +1,10 @@
 import { useContext } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 import { AuthContext } from '../auth';
 
 
-export const PrivateRoute = ({ children }) => {
+export const PrivateRoute = () => {
 
     const { logged } = useContext( AuthContext );
     const { pathname, search } = useLocation();
@@ -14,6 +14,6 @@ export const PrivateRoute = ({ children }) => {
     
 
     return (logged)
-        ? children
+        ? <Outlet />
         : <Navigate to="/login" />
 }
