@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { MemoryRouter, useNavigate } from 'react-router-dom';
+import { MemoryRouter, RouterProvider, createMemoryRouter, useNavigate } from 'react-router-dom';
 
 import { AuthContext } from '../../../src/auth/context/AuthContext';
 import { Navbar } from '../../../src/ui/components/Navbar';
@@ -27,11 +27,11 @@ describe('Pruebas en <Navbar />', () => {
 
     test('debe de mostrar el nombre del usuario', () => {
         
+        const router = createMemoryRouter([{ path: '*', element: <Navbar /> }]);
+
         render(
             <AuthContext.Provider value={ contextValue}>
-                <MemoryRouter>
-                    <Navbar />
-                </MemoryRouter> 
+                <RouterProvider router={ router } />
             </AuthContext.Provider>
         );
         
@@ -42,11 +42,11 @@ describe('Pruebas en <Navbar />', () => {
 
     test('debe de llamar el logout y navigate cuando se hace click en el botón', () => {
 
+        const router = createMemoryRouter([{ path: '*', element: <Navbar /> }]);
+        
         render(
             <AuthContext.Provider value={ contextValue}>
-                <MemoryRouter>
-                    <Navbar />
-                </MemoryRouter> 
+                <RouterProvider router={ router } />
             </AuthContext.Provider>
         );
 

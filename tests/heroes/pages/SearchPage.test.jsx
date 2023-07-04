@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, RouterProvider, createMemoryRouter } from 'react-router-dom';
 import { SearchPage } from '../../../src/heroes/pages/SearchPage';
 
 const mockedUseNavigate = jest.fn();
@@ -19,10 +19,10 @@ describe('Pruebas en <SearchPage />', () => {
     
     test('debe de mostrarse correactamente con valores por defecto', () => {
         
+        const router = createMemoryRouter([ { path: '*', element: <SearchPage /> } ]);
+
         const { container } =render(
-            <MemoryRouter>
-                <SearchPage />
-            </MemoryRouter>
+            <RouterProvider router={ router } />
         );
         expect( container ).toMatchSnapshot();
         
@@ -30,10 +30,12 @@ describe('Pruebas en <SearchPage />', () => {
 
     test('debe de mostrar a Batman y el input con el valor del queryString', () => {
         
+        const router = createMemoryRouter([ { path: '*', element: <SearchPage /> } ], {
+            initialEntries: ['/search?q=batman']
+        });
+
         render(
-            <MemoryRouter initialEntries={['/search?q=batman']}>
-                <SearchPage />
-            </MemoryRouter>
+            <RouterProvider router={ router } />
         );
         
         const input = screen.getByRole('textbox');
@@ -49,10 +51,12 @@ describe('Pruebas en <SearchPage />', () => {
 
     test('debe de mostrar un error si no se encuentra el hero (batman123)', () => {
         
+        const router = createMemoryRouter([ { path: '*', element: <SearchPage /> } ], {
+            initialEntries: ['/search?q=batman123']
+        });
+
         render(
-            <MemoryRouter initialEntries={['/search?q=batman123']}>
-                <SearchPage />
-            </MemoryRouter>
+            <RouterProvider router={ router } />
         );
 
         const alert = screen.getByLabelText('alert-danger');
@@ -62,13 +66,15 @@ describe('Pruebas en <SearchPage />', () => {
     });
 
     test('debe de llamar el navigate a la pantalla nueva', () => {
-        
+
         const inputValue = 'superman';
+        
+        const router = createMemoryRouter([ { path: '*', element: <SearchPage /> } ], {
+            initialEntries: ['/search']
+        });
 
         render(
-            <MemoryRouter initialEntries={['/search']}>
-                <SearchPage />
-            </MemoryRouter>
+            <RouterProvider router={ router } />
         );
 
         const input = screen.getByRole('textbox');

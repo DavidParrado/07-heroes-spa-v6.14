@@ -6,7 +6,9 @@ import { LoginPage } from '../auth';
 import { HeroesRoutes } from '../heroes/routes/HeroesRoutes';
 import { DcPage, HeroPage, MarvelPage, SearchPage } from '../heroes';
 
-export const appRoutes = [
+
+
+const router = createBrowserRouter([
   {
     path: 'login/*',
     Component: PublicRoute,
@@ -31,9 +33,7 @@ export const appRoutes = [
       }
     ]
   }
-]
-
-const router = createBrowserRouter(appRoutes);
+]);
 
 export const AppRouter = () => {
   return (
