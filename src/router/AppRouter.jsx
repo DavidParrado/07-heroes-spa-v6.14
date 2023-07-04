@@ -1,6 +1,7 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-import { PublicRoute, PrivateRoute } from './';
+import { PublicRoute } from './PublicRoute';
+import { PrivateRoute } from './PrivateRoute';
 import { LoginPage } from '../auth';
 import { HeroesRoutes } from '../heroes/routes/HeroesRoutes';
 import { DcPage, HeroPage, MarvelPage, SearchPage } from '../heroes';
